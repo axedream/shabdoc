@@ -36,7 +36,7 @@ class Db
      * @param array|null $params
      * @return array
      */
-    public function execute($query, array $params=null)
+    public function query($query, array $params=null)
     {
         if(is_null($params)){
             $stmt = $this->pdo->query($query);
