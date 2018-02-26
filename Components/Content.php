@@ -51,7 +51,7 @@ class Content
         }
 
         if ($result) {
-            return ['type'=>'html', 'title'=>$result['title'],'content'=>$result['text']];
+            return ['type'=>$type, 'title'=>$result['title'],'content'=>$result['text']];
         }
 
         return FALSE;
