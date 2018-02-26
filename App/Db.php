@@ -1,6 +1,7 @@
 <?php
 namespace App;
 use App;
+use Controllers\Error;
 
 /**
  * Класс для работы с базой данных
@@ -14,7 +15,12 @@ class Db
     public function __construct()
     {
         $settings = $this->getPDOSettings();
-        $this->pdo = new \PDO($settings['dsn'], $settings['user'], $settings['pass'], null);
+        try {
+            $this->pdo = new \PDO($settings['dsn'], $settings['user'], $settings['pass'], null);
+        } catch (\Exception $e) {
+            echo App::$core->runAction('Error', 'errorDB', [$e]);
+            die();
+        }
     }
 
     /**

@@ -23,6 +23,10 @@ class Error extends Controller
         return $this->render('error'.DIRECTORY_SEPARATOR.'classNotFound');
     }
 
+    public function errorDB(){
+        return $this->render('error'.DIRECTORY_SEPARATOR.'dbNotFound');
+    }
+
     /**
      * Общее икслючение
      * toDo пропработвать до 500б 404 и т.д.
