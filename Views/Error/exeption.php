@@ -1,2 +1,2 @@
 Что то пошло не так
-<?php //var_dump($params) ?>
+<?php var_dump($params) ?>

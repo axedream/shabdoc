@@ -53,4 +53,5 @@ class Db
 
         return $stmt->fetchAll();
     }
+
 }

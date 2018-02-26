@@ -25,7 +25,7 @@ class Model
     public function __construct()
     {
         $this->db = App::$db;
-        $this->table = $this->table ?? lcfirst(get_class($this));
+        $this->table = $this->table ?? lcfirst(explode("\\",get_class($this))[1]);
         $this->setValues();
     }
 
@@ -37,8 +37,6 @@ class Model
         if ($this->table) {
             foreach ($this->db->query('SHOW COLUMNS FROM '.$this->table) as $results) {
 
-            //добавляем свойства
-            $this->$results['Field'] = '';
             //размещаем полученный свойсва в массив
             $this->array_value[] = $results['Field'];
 
@@ -213,7 +211,7 @@ class Model
             if (!empty($id)) {
             //есди ID цифра
                 if (is_numeric((int)$id)) {
-                    $result = $this->db->getAll("SELECT * FROM " . $this->table . " WHERE id =" . $id . $this->_order );
+                    $result = $this->db->query("SELECT * FROM " . $this->table . " WHERE id =" . $id . $this->_order );
                 //если ID не цифра
                 } else {
                     //если ID массив
@@ -221,20 +219,20 @@ class Model
                         //разворачиваем ID массив
                         $this->where($id);
                         //получаем результат
-                        $result = $this->db->getAll("SELECT * FROM " . $this->table . " WHERE ".$this->_where . $this->_order);
+                        $result = $this->db->query("SELECT * FROM " . $this->table . " WHERE ".$this->_where . $this->_order);
                         //если ID текст
                     } else {
                         //если свободный запрос
-                        $result = $this->db->getAll("SELECT * FROM " . $this->table . " WHERE ".$id . $this->_order);
+                        $result = $this->db->query("SELECT * FROM " . $this->table . " WHERE ".$id . $this->_order);
                     }
                 }
 
             //если не передан ID
             } else {
                 if ( !empty($this->_where)) {
-                $result = $this->db->getAll("SELECT * FROM " . $this->table . " WHERE ".$this->_where . $this->_order);
+                $result = $this->db->query("SELECT * FROM " . $this->table . " WHERE ".$this->_where . $this->_order);
                 } else {
-                    $result = $this->db->getAll("SELECT * FROM " . $this->table . $this->_order);
+                    $result = $this->db->query("SELECT * FROM " . $this->table . $this->_order);
                 }
             }
 
